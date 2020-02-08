@@ -75,7 +75,7 @@ func (s *Server) ListenAndServe() error {
 		wh.calcUserIDFunc = s.AuthToken
 	}
 	s.wh = &wh
-	http.Handle(s.WSPath, s.wh)
+	http.Handle(s.WSPath, s.wh)  ///*******circularly call listen 
 
 	// push request handler
 	ph := pushHandler{
@@ -85,9 +85,9 @@ func (s *Server) ListenAndServe() error {
 		ph.authFunc = s.PushAuth
 	}
 	s.ph = &ph
-	http.Handle(s.PushPath, s.ph)
+	http.Handle(s.PushPath, s.ph)  //******
 
-	return http.ListenAndServe(s.Addr, nil)
+	return http.ListenAndServe(s.Addr, nil)  //****
 }
 
 // Push filters connections by userID and event, then write message
